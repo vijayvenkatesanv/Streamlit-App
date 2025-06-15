@@ -13,68 +13,83 @@ st.set_page_config(
 )
 
 # ---------------------------
+# Load the Trained Model
+# ---------------------------
+@st.cache_resource
+def load_model():
+    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file is present
+
+model = load_model()
+
+# ---------------------------
 # Custom CSS Styling
 # ---------------------------
 st.markdown("""
     <style>
         body {
             background-color: #121212;
+            font-family: 'Segoe UI', sans-serif;
         }
         h1, h4, p {
             text-align: center;
         }
         .block-container {
-            padding-top: 2rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            max-width: 85%;
+            margin: auto;
+        }
+        .uploadedImage {
+            background-color: #1f1f1f;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #6C63FF;
+            margin-top: 0.5rem;
         }
         .uploadedImage img {
             border-radius: 8px;
-            border: 2px solid #6C63FF;
-            background-color: #1E1E1E;
         }
         .stButton>button {
             background-color: #6C63FF;
             color: white;
-            border: none;
-            border-radius: 8px;
+            font-weight: bold;
+            border-radius: 6px;
             padding: 0.5rem 1rem;
+            border: none;
             transition: 0.3s;
         }
         .stButton>button:hover {
-            background-color: #5a52cc;
+            background-color: #554bcf;
         }
+        .stFileUploader {
+            background-color: #2b2b2b;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------
-# Load the Trained Model
-# ---------------------------
-@st.cache_resource
-def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")  # Make sure this file exists
-
-model = load_model()
-
-# ---------------------------
-# Page Header
+# Page Title and Description
 # ---------------------------
 st.markdown("""
     <h1 style='color: #6C63FF;'>✍️ MNIST Digit Classifier</h1>
-    <p style='color: #AAAAAA;'>Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>
-    Each image should be white digits on a black background.</p>
+    <p style='color: #AAAAAA; font-size: 16px;'>
+        Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>
+        Ensure each image contains <b>white digits on a black background</b>.
+    </p>
 """, unsafe_allow_html=True)
 
-st.markdown("---")
+st.markdown("<hr style='border: 1px solid #444;'>", unsafe_allow_html=True)
 
 # ---------------------------
 # Reset Button
 # ---------------------------
-if "reset" not in st.session_state:
-    st.session_state.reset = False
-
-col1, col2, col3 = st.columns([1, 6, 1])
+col1, col2, col3 = st.columns([1, 3, 1])
 with col2:
     if st.button("🔁 Reset App", use_container_width=True):
-        st.session_state.reset = True
+        st.session_state.clear()
         st.rerun()
 
 # ---------------------------
@@ -96,9 +111,9 @@ if uploaded_files:
         st.warning("⚠️ Only the first 30 images will be processed.")
         uploaded_files = uploaded_files[:30]
 
-    cols = st.columns(3)
+    gallery_cols = st.columns(3)
     for idx, uploaded_file in enumerate(uploaded_files):
-        with cols[idx % 3]:
+        with gallery_cols[idx % 3]:
             try:
                 image = Image.open(uploaded_file).convert("L")
                 image = ImageOps.invert(image)
@@ -108,16 +123,16 @@ if uploaded_files:
                 prediction = model.predict(img_array)[0]
 
                 st.markdown("<div class='uploadedImage'>", unsafe_allow_html=True)
-                st.image(image, caption=f"🔢 Predicted: {prediction}", width=120)
+                st.image(image, caption=f"🔢 Predicted: {prediction}", width=150)
                 st.markdown("</div>", unsafe_allow_html=True)
             except Exception as e:
-                st.error(f"Error processing {uploaded_file.name}: {e}")
+                st.error(f"❌ Error processing {uploaded_file.name}: {e}")
 
 # ---------------------------
 # Footer
 # ---------------------------
-st.markdown("---")
+st.markdown("<hr style='border: 1px solid #444;'>", unsafe_allow_html=True)
 st.markdown(
-    "<p style='text-align: center; font-size: 13px;'>Built with ❤️ using Streamlit</p>",
+    "<p style='text-align: center; font-size: 13px; color: #777;'>Built with ❤️ using <a href='https://streamlit.io' target='_blank' style='color: #6C63FF;'>Streamlit</a></p>",
     unsafe_allow_html=True
 )
