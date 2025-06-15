@@ -3,6 +3,9 @@ import numpy as np
 import joblib
 from PIL import Image, ImageOps
 
+# ✅ Set page config FIRST
+st.set_page_config(page_title="MNIST Digit Classifier", page_icon="✍️")
+
 # --------------------------------------
 # 🎯 Load pre-trained model
 # --------------------------------------
@@ -15,7 +18,6 @@ model = load_model()
 # --------------------------------------
 # 🧠 App Title and Description
 # --------------------------------------
-st.set_page_config(page_title="MNIST Digit Classifier", page_icon="✍️")
 st.title("✍️ MNIST Digit Classifier")
 st.markdown(
     """
@@ -30,21 +32,17 @@ st.markdown(
 uploaded_file = st.file_uploader("📁 Upload an image (PNG or JPG)", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # --------------------------------------
     # 🖼️ Image Processing
-    # --------------------------------------
     image = Image.open(uploaded_file).convert("L")      # Grayscale
-    image = ImageOps.invert(image)                      # Invert to white digit on black background
-    image = image.resize((28, 28))                      # Resize to 28x28
+    image = ImageOps.invert(image)                      # White digit on black
+    image = image.resize((28, 28))                      # Resize to MNIST size
 
     st.image(image, caption="🖼️ Processed Image", width=150)
 
-    # Convert to numpy and flatten
+    # Convert to array and flatten
     img_array = np.array(image).astype("float32").reshape(1, -1)
 
-    # --------------------------------------
     # 🔍 Prediction
-    # --------------------------------------
     prediction = model.predict(img_array)
 
     st.markdown(f"### ✅ Predicted Digit: **{prediction[0]}**")
