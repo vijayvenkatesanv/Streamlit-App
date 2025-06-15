@@ -20,4 +20,5 @@ The frontend design uses custom CSS embedded within the Streamlit app to provide
 The project relies on several Python libraries. Image processing is handled using Pillow (PIL) and NumPy, which support grayscale conversion, resizing, and pixel value manipulation. The machine learning pipeline is built with scikit-learn, and the model is saved using Joblib for efficient loading at runtime. Streamlit serves as the interface layer, managing state, rendering components, and hosting the app on a local or cloud server.
 
 Overall, this project demonstrates how traditional machine learning models can be effectively combined with modern web interfaces to build an intuitive, end-to-end application for visual digit classification. It is well-suited for demonstrations, education, or lightweight digit recognition tasks without requiring complex deep learning frameworks.
-![Screenshot 2025-06-15 154550](https://github.com/user-attachments/assets/684cfe40-c465-4c92-9309-58a5ec2013a0)
+
+![Screenshot 2025-06-15 154550](https://github.com/user-attachments/assets/5bf4ca66-8e41-49b9-a6e4-3b07562c3e72)
