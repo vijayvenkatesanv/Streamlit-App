@@ -13,140 +13,31 @@ This is an ML App
 ![image](https://github.com/user-attachments/assets/992a95b1-8281-4017-aff8-8eedca6a7e7f)
 
 
-# ✍️ MNIST Digit Classifier | Streamlit App
+This project is a Streamlit-based web application designed for real-time handwritten digit classification using a Logistic Regression model trained on the MNIST dataset. It allows users to upload up to 30 grayscale images of handwritten digits (preferably 28×28 pixels in size), which are then preprocessed, inverted (if needed), and passed through a scikit-learn pipeline for prediction.
 
-An interactive digit recognition web application using **Logistic Regression** trained on the MNIST dataset. Built with [Streamlit](https://streamlit.io), this app enables users to upload handwritten digit images and receive real-time predictions with a clean, modern interface.
+The machine learning model used here is a Logistic Regression classifier, trained on the classic MNIST dataset consisting of 60,000 training images and 10,000 test images of handwritten digits (0–9). Despite its simplicity compared to modern deep learning approaches, Logistic Regression performs surprisingly well on this dataset and offers the benefit of being lightweight, fast, and interpretable. The model is serialized using joblib and stored in the file svm_simple_pipeline.pkl.
 
-👉 **Live on GitHub**: [vijayvenkatesanv/Streamlit-App](https://github.com/vijayvenkatesanv/Streamlit-App)
+The web application is implemented using Streamlit, which provides an elegant and interactive user interface. The app includes a dark-themed layout, custom CSS styling, and a responsive image upload section. When users upload digit images (in .png, .jpg, or .jpeg format), the app automatically resizes them, converts them to grayscale, and inverts the colors to match the expected MNIST format (white digits on black background). Predictions are displayed alongside each uploaded image with a minimal and clean aesthetic.
 
----
+Below is a summary of the core technologies used in the project:
 
-## 📌 Overview
+Component	Technology Used
+Frontend	Streamlit
+Image Processing	PIL (Pillow), NumPy
+Model Training	Scikit-learn (Logistic Regression)
+Serialization	Joblib
+Python Version	Python 3.8+
 
-This project showcases the application of classical machine learning (Logistic Regression) to image classification. With minimal resources, it can predict up to 30 images of handwritten digits in real-time using a trained model.
+To run the project locally, clone the repository and install the required dependencies listed in requirements.txt. Once installed, launch the app using the command:
 
----
-
-## 🚀 Features
-
-- 🔢 Multi-image classification (up to 30 images at once)
-- 🖼️ Upload images in PNG, JPG, or JPEG format
-- 🧠 Logistic Regression model with high accuracy on MNIST
-- 🖤 Automatically inverts black-on-white digit images
-- 🖥️ Modern UI with responsive layout (Dark Mode)
-- 🔁 Reset app state with a single click
-
----
-
-## 🧠 Model Information
-
-- **Model Type**: Logistic Regression
-- **Library**: scikit-learn
-- **Dataset**: MNIST (60k training, 10k test samples)
-- **Input**: 28×28 grayscale digit images → flattened to 784 features
-- **Saved As**: `svm_simple_pipeline.pkl` (contains Logistic Regression)
-
----
-
-## 🛠️ Tech Stack
-
-| Component       | Tool/Library     |
-|----------------|------------------|
-| UI & Frontend  | Streamlit        |
-| ML Backend     | scikit-learn     |
-| Image Processing| Pillow (PIL), NumPy |
-| Model Saving   | joblib           |
-| Python Version | Python 3.8+      |
-
----
-
-## 📁 Project Structure
-
-Streamlit-App/
-├── app.py # Streamlit application code
-├── svm_simple_pipeline.pkl # Trained Logistic Regression model
-├── requirements.txt # All Python dependencies
-├── README.md # Project documentation (this file)
-└── sample_digits/ # (Optional) Example digit images
-
-yaml
-Copy
-Edit
-
----
-
-## ▶️ Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/vijayvenkatesanv/Streamlit-App.git
-cd Streamlit-App
-2. Install Required Packages
-bash
-Copy
-Edit
-pip install -r requirements.txt
-3. Launch the App
-bash
+arduino
 Copy
 Edit
 streamlit run app.py
-It will open in your browser at: http://localhost:8501
+This will start a local server, and the app can be accessed in your browser at http://localhost:8501. The app also includes a reset button that allows users to clear all session states and start over, which is useful when uploading multiple sets of images.
 
-📥 Input Requirements
-File types: .png, .jpg, .jpeg
+The input expectations for the images are simple: grayscale, square format (preferably 28×28), and clear digit contours. The app handles preprocessing internally, so minor variations in image size or background color are automatically corrected. This makes it user-friendly even for non-technical users.
 
-Size: Preferably 28×28 (resizing is applied)
+The entire project is lightweight, portable, and suitable for educational demonstrations or quick ML prototyping. It can be deployed easily on Streamlit Cloud by linking the GitHub repo and setting app.py as the main script. Overall, the project serves as a minimal but functional example of integrating traditional machine learning with an intuitive web-based frontend.
 
-Format: Grayscale (or convertible)
-
-Digit should be white on black; if not, app auto-inverts
-
-📦 requirements.txt
-shell
-Copy
-Edit
-streamlit>=1.28
-numpy>=1.22
-Pillow>=9.0
-joblib>=1.2
-scikit-learn>=1.1
-📸 Screenshots
-Upload Area	Prediction Results
-
-To add your own screenshots: Create a screenshots/ folder and place PNG files inside.
-
-☁️ Deployment (Streamlit Cloud)
-To deploy this app using Streamlit Cloud:
-
-Push this repo to your GitHub.
-
-Sign in at share.streamlit.io.
-
-Connect your repo and set app.py as the entry point.
-
-Click Deploy. Done!
-
-📄 License
-This project is licensed under the MIT License — feel free to use, modify, and distribute with attribution.
-
-👤 Author
-Vijay Venkatesan V
-Dept. of Electronics and Communication Engineering
-Amrita School of Engineering, Coimbatore
-📧 venkatvijay614@gmail.com
-🔗 GitHub
-
-🙌 Acknowledgements
-Streamlit
-
-scikit-learn
-
-MNIST Dataset
-
-yaml
-Copy
-Edit
-
-MNIST Dataset
+If you’d like me to write a one-line summary for the GitH
