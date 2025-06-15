@@ -22,11 +22,36 @@ def load_model():
 model = load_model()
 
 # ---------------------------
-# Page Header
+# Page Styling and Header
 # ---------------------------
 st.markdown("""
-    <h1 style='text-align: center; color: #4A90E2;'>✍️ MNIST Digit Classifier</h1>
-    <p style='text-align: center; color: #555;'>Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>Each image should be white digits on a black background.</p>
+    <style>
+        h1, h4, p {
+            text-align: center;
+        }
+        .block-container {
+            padding-top: 2rem;
+        }
+        .uploadedImage img {
+            border-radius: 8px;
+            border: 2px solid #6C63FF;
+            background-color: #1E1E1E;
+        }
+        .stButton>button {
+            background-color: #6C63FF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            transition: 0.3s;
+        }
+        .stButton>button:hover {
+            background-color: #5a52cc;
+        }
+    </style>
+
+    <h1 style='color: #6C63FF;'>✍️ MNIST Digit Classifier</h1>
+    <p style='color: #AAAAAA;'>Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>Each image should be white digits on a black background.</p>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
@@ -62,7 +87,7 @@ if uploaded_files:
         st.warning("⚠️ Only the first 30 images will be processed.")
         uploaded_files = uploaded_files[:30]
 
-    cols = st.columns(3)  # 3 columns layout
+    cols = st.columns(3)  # 3-column layout
     for idx, uploaded_file in enumerate(uploaded_files):
         with cols[idx % 3]:
             try:
@@ -73,7 +98,9 @@ if uploaded_files:
 
                 prediction = model.predict(img_array)[0]
 
+                st.markdown("<div class='uploadedImage'>", unsafe_allow_html=True)
                 st.image(image, caption=f"🔢 Predicted: {prediction}", width=120)
+                st.markdown("</div>", unsafe_allow_html=True)
             except Exception as e:
                 st.error(f"Error processing {uploaded_file.name}: {e}")
 
