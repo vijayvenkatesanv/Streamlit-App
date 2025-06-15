@@ -3,10 +3,10 @@ import numpy as np
 import joblib
 from PIL import Image, ImageOps
 
-# 🛠️ Set up the page (must be the first Streamlit command)
+# ✅ MUST BE THE FIRST Streamlit COMMAND
 st.set_page_config(page_title="MNIST Digit Classifier", page_icon="✍️")
 
-# ✅ Load the model only once and reuse
+# ✅ Load the model once
 @st.cache_resource
 def load_model():
     return joblib.load("svm_simple_pipeline.pkl")
@@ -22,18 +22,17 @@ uploaded_file = st.file_uploader("Upload PNG/JPG image", type=["png", "jpg", "jp
 
 # 👇 Only process if image is uploaded
 if uploaded_file is not None:
-    # 🖼️ Image preprocessing
-    image = Image.open(uploaded_file).convert("L")     # Convert to grayscale
-    image = ImageOps.invert(image)                     # Invert to match MNIST style
-    image = image.resize((28, 28))                     # Resize to 28x28
-
+    # 🖼️ Preprocessing
+    image = Image.open(uploaded_file).convert("L")
+    image = ImageOps.invert(image)
+    image = image.resize((28, 28))
     st.image(image, caption="🖼️ Uploaded Image", width=150)
 
-    # 📊 Predict
+    # 🔍 Predict
     img_array = np.array(image).astype("float32").reshape(1, -1)
     prediction = model.predict(img_array)
     st.markdown(f"### 🎯 Predicted Digit: **{prediction[0]}**")
 
-    # 🔄 Reset button to upload another image
+    # 🔁 Reset
     if st.button("🔁 Reset and Upload Another"):
         st.experimental_rerun()
