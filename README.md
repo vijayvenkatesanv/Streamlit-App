@@ -21,4 +21,4 @@ The project relies on several Python libraries. Image processing is handled usin
 
 Overall, this project demonstrates how traditional machine learning models can be effectively combined with modern web interfaces to build an intuitive, end-to-end application for visual digit classification. It is well-suited for demonstrations, education, or lightweight digit recognition tasks without requiring complex deep learning frameworks.
 
-![Screenshot 2025-06-15 154550](https://github.com/user-attachments/assets/5bf4ca66-8e41-49b9-a6e4-3b07562c3e72)
+![Screenshot 2025-06-15 154301](https://github.com/user-attachments/assets/a45e7c31-a52e-47ea-a5f9-e55733b9ed2f)
