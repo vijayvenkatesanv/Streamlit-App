@@ -22,8 +22,6 @@ def load_model():
 model = load_model()
 
 # ---------------------------
-# Custom CSS Styling
-# ---------------------------
 st.markdown("""
     <style>
         body {
@@ -41,13 +39,17 @@ st.markdown("""
         }
         .uploadedImage {
             background-color: #1f1f1f;
-            padding: 1rem;
+            padding: 0.5rem 0.5rem 1rem 0.5rem;
             border-radius: 10px;
             border: 1px solid #6C63FF;
             margin-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .uploadedImage img {
             border-radius: 8px;
+            margin-bottom: 0.3rem;
         }
         .stButton>button {
             background-color: #6C63FF;
@@ -69,6 +71,7 @@ st.markdown("""
         footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
+
 
 # ---------------------------
 # Page Title and Description
