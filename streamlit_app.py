@@ -17,7 +17,7 @@ st.set_page_config(
 # ---------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file is in your working directory
+    return joblib.load("svm_simple_pipeline.pkl")  # Make sure this exists
 
 model = load_model()
 
@@ -100,13 +100,8 @@ if uploaded_files:
 
                 prediction = model.predict(img_array)[0]
 
-                # Display image and prediction together
-                with st.container():
-                    st.image(image, width=130)  # Clean: no deprecated parameter
-                    st.markdown(
-                        f"<div style='text-align:center; color:#6C63FF; font-weight:bold;'>🔢 Predicted: {prediction}</div>",
-                        unsafe_allow_html=True
-                    )
+                # ✅ Only render image with caption — no st.markdown
+                st.image(image, caption=f"🔢 Predicted: {prediction}", width=130)
 
             except Exception as e:
                 st.error(f"❌ Error processing {uploaded_file.name}: {e}")
