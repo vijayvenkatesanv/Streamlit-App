@@ -17,12 +17,12 @@ st.set_page_config(
 # ---------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file exists
+    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file exists in the same directory
 
 model = load_model()
 
 # ---------------------------
-# Custom CSS Styling (Safe Version)
+# Custom CSS Styling (Clean & Modern)
 # ---------------------------
 st.markdown("""
     <style>
@@ -67,7 +67,7 @@ st.markdown("""
     <h1 style='color: #6C63FF;'>✍️ MNIST Digit Classifier</h1>
     <p style='color: #AAAAAA; font-size: 16px;'>
         Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>
-        Ensure each image contains <b>white digits on a black background</b>.
+        Each image must contain <b>white digits on a black background</b>.
     </p>
 """, unsafe_allow_html=True)
 
@@ -113,7 +113,7 @@ if uploaded_files:
                 prediction = model.predict(img_array)[0]
 
                 st.markdown(f"<p style='text-align:center; color:#6C63FF; font-weight:bold;'>🔢 Predicted: {prediction}</p>", unsafe_allow_html=True)
-                st.image(image, use_column_width=False, width=130)
+                st.image(image, width=130)  # Clean: No deprecated parameter
             except Exception as e:
                 st.error(f"❌ Error processing {uploaded_file.name}: {e}")
 
