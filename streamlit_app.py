@@ -1,8 +1,4 @@
-import streamlit as st
 
-st.title('Machine Learning app')
-
-st.write('Hello world!')
 import streamlit as st
 import numpy as np
 import joblib
