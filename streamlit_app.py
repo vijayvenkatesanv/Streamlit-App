@@ -1,45 +1,59 @@
 import streamlit as st
 import numpy as np
 import joblib
-import zipfile
 from PIL import Image, ImageOps
-import os
 
-# --------------------------------------------
-# Step 1: Unzip and load model from ZIP
-# --------------------------------------------
-model_path = "svm_simple_pipeline.pkl"
-zip_path = "svm_simple_pipeline.zip"
+# --------------------------------------
+# 🎯 Load pre-trained model
+# --------------------------------------
+@st.cache_resource
+def load_model():
+    return joblib.load("svm_simple_pipeline.pkl")
 
-# Unzip only if the model is not already extracted
-if not os.path.exists(model_path):
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall()
+model = load_model()
 
-# Load the model
-model = joblib.load(model_path)
+# --------------------------------------
+# 🧠 App Title and Description
+# --------------------------------------
+st.set_page_config(page_title="MNIST Digit Classifier", page_icon="✍️")
+st.title("✍️ MNIST Digit Classifier")
+st.markdown(
+    """
+    Upload a **28×28 grayscale image** of a handwritten digit (0–9).  
+    The model will predict the digit using an SVM classifier.
+    """
+)
 
-# --------------------------------------------
-# Step 2: Streamlit UI
-# --------------------------------------------
-st.set_page_config(page_title="MNIST Digit Classifier", page_icon="🔢")
-st.title("🧠 MNIST Digit Classifier")
-st.write("Upload a **28x28 grayscale image** of a digit (like MNIST).")
-
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+# --------------------------------------
+# 📤 Image Upload Section
+# --------------------------------------
+uploaded_file = st.file_uploader("📁 Upload an image (PNG or JPG)", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # Convert to grayscale and invert (to match MNIST style)
-    image = Image.open(uploaded_file).convert("L")
-    image = ImageOps.invert(image)
-    image = image.resize((28, 28))  # Resize to 28x28
+    # --------------------------------------
+    # 🖼️ Image Processing
+    # --------------------------------------
+    image = Image.open(uploaded_file).convert("L")      # Grayscale
+    image = ImageOps.invert(image)                      # Invert to white digit on black background
+    image = image.resize((28, 28))                      # Resize to 28x28
 
-    st.image(image, caption='Uploaded Digit', width=150)
+    st.image(image, caption="🖼️ Processed Image", width=150)
 
-    # Convert image to NumPy array and normalize
-    img_array = np.array(image).astype("float32")
-    img_flattened = img_array.reshape(1, -1) / 255.0
+    # Convert to numpy and flatten
+    img_array = np.array(image).astype("float32").reshape(1, -1)
 
-    # Predict
-    prediction = model.predict(img_flattened)
-    st.success(f"🧾 Predicted Digit: **{prediction[0]}**")
+    # --------------------------------------
+    # 🔍 Prediction
+    # --------------------------------------
+    prediction = model.predict(img_array)
+
+    st.markdown(f"### ✅ Predicted Digit: **{prediction[0]}**")
+
+# --------------------------------------
+# 📝 Footer
+# --------------------------------------
+st.markdown("---")
+st.markdown(
+    "<center><small>Developed using Streamlit & Scikit-learn · Model: SVM</small></center>",
+    unsafe_allow_html=True
+)
