@@ -19,7 +19,7 @@ model = joblib.load(model_path)
 # --------------------------------------------
 # Step 2: Streamlit Interface
 # --------------------------------------------
-st.title("MNIST Digit Classifier")
+st.title("MNIST Digit Classifier #")
 st.write("Upload a **28x28 grayscale image** of a digit (like MNIST).")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
