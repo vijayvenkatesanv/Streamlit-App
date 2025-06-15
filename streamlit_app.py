@@ -17,22 +17,15 @@ st.set_page_config(
 # ---------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file exists in the same directory
+    return joblib.load("svm_simple_pipeline.pkl")
 
 model = load_model()
 
 # ---------------------------
-# Custom CSS Styling (Clean & Modern)
+# Custom CSS
 # ---------------------------
 st.markdown("""
     <style>
-        body {
-            background-color: #121212;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        h1, h4, p {
-            text-align: center;
-        }
         .block-container {
             padding-top: 1rem;
             padding-bottom: 1rem;
@@ -51,21 +44,16 @@ st.markdown("""
         .stButton>button:hover {
             background-color: #554bcf;
         }
-        .stFileUploader {
-            background-color: #2b2b2b;
-            padding: 1rem;
-            border-radius: 10px;
-        }
         footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------
-# Page Title and Description
+# Title and Description
 # ---------------------------
 st.markdown("""
-    <h1 style='color: #6C63FF;'>✍️ MNIST Digit Classifier</h1>
-    <p style='color: #AAAAAA; font-size: 16px;'>
+    <h1 style='color: #6C63FF; text-align:center;'>✍️ MNIST Digit Classifier</h1>
+    <p style='color: #AAAAAA; font-size: 16px; text-align:center;'>
         Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>
         Each image must contain <b>white digits on a black background</b>.
     </p>
@@ -112,8 +100,13 @@ if uploaded_files:
 
                 prediction = model.predict(img_array)[0]
 
-                st.markdown(f"<p style='text-align:center; color:#6C63FF; font-weight:bold;'>🔢 Predicted: {prediction}</p>", unsafe_allow_html=True)
-                st.image(image, width=130)  # Clean: No deprecated parameter
+                with st.container():
+                    st.image(image, width=130)
+                    st.markdown(
+                        f"<div style='text-align:center; color:#6C63FF; font-weight:bold;'>🔢 Predicted: {prediction}</div>",
+                        unsafe_allow_html=True
+                    )
+
             except Exception as e:
                 st.error(f"❌ Error processing {uploaded_file.name}: {e}")
 
