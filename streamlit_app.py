@@ -4,7 +4,7 @@ import joblib
 from PIL import Image, ImageOps
 
 # ---------------------------
-# Must be the FIRST command
+# Streamlit Page Config
 # ---------------------------
 st.set_page_config(
     page_title="MNIST Digit Classifier",
@@ -13,19 +13,13 @@ st.set_page_config(
 )
 
 # ---------------------------
-# Load SVM Model
-# ---------------------------
-@st.cache_resource
-def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")
-
-model = load_model()
-
-# ---------------------------
-# Page Styling and Header
+# Custom CSS Styling
 # ---------------------------
 st.markdown("""
     <style>
+        body {
+            background-color: #121212;
+        }
         h1, h4, p {
             text-align: center;
         }
@@ -49,9 +43,24 @@ st.markdown("""
             background-color: #5a52cc;
         }
     </style>
+""", unsafe_allow_html=True)
 
+# ---------------------------
+# Load the Trained Model
+# ---------------------------
+@st.cache_resource
+def load_model():
+    return joblib.load("svm_simple_pipeline.pkl")  # Make sure this file exists
+
+model = load_model()
+
+# ---------------------------
+# Page Header
+# ---------------------------
+st.markdown("""
     <h1 style='color: #6C63FF;'>✍️ MNIST Digit Classifier</h1>
-    <p style='color: #AAAAAA;'>Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>Each image should be white digits on a black background.</p>
+    <p style='color: #AAAAAA;'>Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>
+    Each image should be white digits on a black background.</p>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
@@ -78,7 +87,7 @@ uploaded_files = st.file_uploader(
 )
 
 # ---------------------------
-# Prediction Display
+# Prediction and Display
 # ---------------------------
 if uploaded_files:
     st.markdown(f"<h4 style='color: #6C63FF;'>📸 Total Uploaded: {len(uploaded_files)}</h4>", unsafe_allow_html=True)
@@ -87,7 +96,7 @@ if uploaded_files:
         st.warning("⚠️ Only the first 30 images will be processed.")
         uploaded_files = uploaded_files[:30]
 
-    cols = st.columns(3)  # 3-column layout
+    cols = st.columns(3)
     for idx, uploaded_file in enumerate(uploaded_files):
         with cols[idx % 3]:
             try:
