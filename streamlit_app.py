@@ -17,10 +17,12 @@ st.set_page_config(
 # ---------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file is present
+    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file exists
 
 model = load_model()
 
+# ---------------------------
+# Custom CSS Styling (Safe Version)
 # ---------------------------
 st.markdown("""
     <style>
@@ -36,20 +38,6 @@ st.markdown("""
             padding-bottom: 1rem;
             max-width: 85%;
             margin: auto;
-        }
-        .uploadedImage {
-            background-color: #1f1f1f;
-            padding: 0.5rem 0.5rem 1rem 0.5rem;
-            border-radius: 10px;
-            border: 1px solid #6C63FF;
-            margin-top: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .uploadedImage img {
-            border-radius: 8px;
-            margin-bottom: 0.3rem;
         }
         .stButton>button {
             background-color: #6C63FF;
@@ -71,7 +59,6 @@ st.markdown("""
         footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
-
 
 # ---------------------------
 # Page Title and Description
@@ -114,9 +101,9 @@ if uploaded_files:
         st.warning("⚠️ Only the first 30 images will be processed.")
         uploaded_files = uploaded_files[:30]
 
-    gallery_cols = st.columns(3)
+    cols = st.columns(3)
     for idx, uploaded_file in enumerate(uploaded_files):
-        with gallery_cols[idx % 3]:
+        with cols[idx % 3]:
             try:
                 image = Image.open(uploaded_file).convert("L")
                 image = ImageOps.invert(image)
@@ -125,9 +112,8 @@ if uploaded_files:
 
                 prediction = model.predict(img_array)[0]
 
-                st.markdown("<div class='uploadedImage'>", unsafe_allow_html=True)
-                st.image(image, caption=f"🔢 Predicted: {prediction}", width=150)
-                st.markdown("</div>", unsafe_allow_html=True)
+                st.markdown(f"<p style='text-align:center; color:#6C63FF; font-weight:bold;'>🔢 Predicted: {prediction}</p>", unsafe_allow_html=True)
+                st.image(image, use_column_width=False, width=130)
             except Exception as e:
                 st.error(f"❌ Error processing {uploaded_file.name}: {e}")
 
