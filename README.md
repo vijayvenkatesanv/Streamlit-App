@@ -40,4 +40,4 @@ The input expectations for the images are simple: grayscale, square format (pref
 
 The entire project is lightweight, portable, and suitable for educational demonstrations or quick ML prototyping. It can be deployed easily on Streamlit Cloud by linking the GitHub repo and setting app.py as the main script. Overall, the project serves as a minimal but functional example of integrating traditional machine learning with an intuitive web-based frontend.
 
-If you’d like me to write a one-line summary for the GitH
+
