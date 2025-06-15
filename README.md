@@ -1,6 +1,4 @@
-# Machine Learning App
-
-This is an ML App
+# MNSIT DIGIT CLASSIFIER 
 
 ## Demo App
 
