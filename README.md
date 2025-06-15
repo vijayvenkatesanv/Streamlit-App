@@ -2,7 +2,7 @@
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://Streamlit-App.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-app-buaespv5graakduogyywv8.streamlit.app/)
 
 ## GitHub Codespaces
 
