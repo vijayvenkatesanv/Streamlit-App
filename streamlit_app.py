@@ -2,10 +2,10 @@ import streamlit as st
 import numpy as np
 import joblib
 from PIL import Image, ImageOps
+import base64
+from io import BytesIO
 
-# ---------------------------
-# Streamlit Config (Dark Style)
-# ---------------------------
+# ✅ This MUST be first Streamlit command
 st.set_page_config(
     page_title="🎨 MNIST Digit Classifier",
     page_icon="🔢",
@@ -13,7 +13,7 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-# Inject Custom CSS for Dark Theme and Colors
+# Inject custom CSS (AFTER set_page_config)
 st.markdown("""
     <style>
     body {
@@ -52,6 +52,9 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+# The rest of your code follows...
+
 
 # ---------------------------
 # Load SVM Model
