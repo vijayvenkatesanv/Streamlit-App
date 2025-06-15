@@ -17,12 +17,12 @@ st.set_page_config(
 # ---------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")
+    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file is in your working directory
 
 model = load_model()
 
 # ---------------------------
-# Custom CSS
+# Custom CSS Styling
 # ---------------------------
 st.markdown("""
     <style>
@@ -100,8 +100,9 @@ if uploaded_files:
 
                 prediction = model.predict(img_array)[0]
 
+                # Display image and prediction together
                 with st.container():
-                    st.image(image, width=130)
+                    st.image(image, width=130)  # Clean: no deprecated parameter
                     st.markdown(
                         f"<div style='text-align:center; color:#6C63FF; font-weight:bold;'>🔢 Predicted: {prediction}</div>",
                         unsafe_allow_html=True
