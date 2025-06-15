@@ -17,7 +17,7 @@ st.set_page_config(
 # ---------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("svm_simple_pipeline.pkl")  # Make sure this exists
+    return joblib.load("svm_simple_pipeline.pkl")  # Ensure this file is present
 
 model = load_model()
 
@@ -26,11 +26,28 @@ model = load_model()
 # ---------------------------
 st.markdown("""
     <style>
+        body {
+            background-color: #121212;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        h1, h4, p {
+            text-align: center;
+        }
         .block-container {
             padding-top: 1rem;
             padding-bottom: 1rem;
             max-width: 85%;
             margin: auto;
+        }
+        .uploadedImage {
+            background-color: #1f1f1f;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #6C63FF;
+            margin-top: 0.5rem;
+        }
+        .uploadedImage img {
+            border-radius: 8px;
         }
         .stButton>button {
             background-color: #6C63FF;
@@ -44,18 +61,23 @@ st.markdown("""
         .stButton>button:hover {
             background-color: #554bcf;
         }
+        .stFileUploader {
+            background-color: #2b2b2b;
+            padding: 1rem;
+            border-radius: 10px;
+        }
         footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------
-# Title and Description
+# Page Title and Description
 # ---------------------------
 st.markdown("""
-    <h1 style='color: #6C63FF; text-align:center;'>✍️ MNIST Digit Classifier</h1>
-    <p style='color: #AAAAAA; font-size: 16px; text-align:center;'>
+    <h1 style='color: #6C63FF;'>✍️ MNIST Digit Classifier</h1>
+    <p style='color: #AAAAAA; font-size: 16px;'>
         Upload up to <b>30 grayscale images</b> (28×28 pixels) of handwritten digits.<br>
-        Each image must contain <b>white digits on a black background</b>.
+        Ensure each image contains <b>white digits on a black background</b>.
     </p>
 """, unsafe_allow_html=True)
 
@@ -89,9 +111,9 @@ if uploaded_files:
         st.warning("⚠️ Only the first 30 images will be processed.")
         uploaded_files = uploaded_files[:30]
 
-    cols = st.columns(3)
+    gallery_cols = st.columns(3)
     for idx, uploaded_file in enumerate(uploaded_files):
-        with cols[idx % 3]:
+        with gallery_cols[idx % 3]:
             try:
                 image = Image.open(uploaded_file).convert("L")
                 image = ImageOps.invert(image)
@@ -100,9 +122,9 @@ if uploaded_files:
 
                 prediction = model.predict(img_array)[0]
 
-                # ✅ Only render image with caption — no st.markdown
-                st.image(image, caption=f"🔢 Predicted: {prediction}", width=130)
-
+                st.markdown("<div class='uploadedImage'>", unsafe_allow_html=True)
+                st.image(image, caption=f"🔢 Predicted: {prediction}", width=150)
+                st.markdown("</div>", unsafe_allow_html=True)
             except Exception as e:
                 st.error(f"❌ Error processing {uploaded_file.name}: {e}")
 
