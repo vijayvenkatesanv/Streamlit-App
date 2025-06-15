@@ -5,53 +5,21 @@ from PIL import Image, ImageOps
 import base64
 from io import BytesIO
 
-# ✅ This MUST be first Streamlit command
+# ✅ THIS MUST BE FIRST STREAMLIT COMMAND
 st.set_page_config(
-    page_title="🎨 MNIST Digit Classifier",
-    page_icon="🔢",
-    layout="wide",
-    initial_sidebar_state="auto"
+    page_title="MNIST Digit Classifier",
+    page_icon="✍️",
+    layout="wide"
 )
 
-# Inject custom CSS (AFTER set_page_config)
-st.markdown("""
-    <style>
-    body {
-        background-color: #1e1e1e;
-        color: white;
-    }
-    .stApp {
-        background-color: #1e1e1e;
-    }
-    h1, h4, .stMarkdown, .stButton > button, .stFileUploader {
-        color: #FAD02E;
-    }
-    .prediction-box {
-        background-color: #2c2f33;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #444;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    .stButton button {
-        background-color: #3c40c6;
-        color: white;
-        border-radius: 8px;
-        font-weight: bold;
-    }
-    .stButton button:hover {
-        background-color: #575fcf;
-        color: white;
-    }
-    .footer {
-        color: #ccc;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 50px;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# ✅ NOW you can write other Streamlit commands
+st.markdown("<style>body { background-color: #111; color: white; }</style>", unsafe_allow_html=True)
+
+@st.cache_resource
+def load_model():
+    return joblib.load("svm_simple_pipeline.pkl")
+
+model = load_model()
 
 # The rest of your code follows...
 
